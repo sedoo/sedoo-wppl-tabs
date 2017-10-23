@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+/*--------------------------------------------------------------
+# Admin Settings
+--------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------
+# Styles des options du plugin dans l'admin
+--------------------------------------------------------------*/
+
+
+/*
+	Variables
+*/
+
+
+/* Partie "Contenu" de l'admin */
+
+.wrap {
+    /* Conteneur spécifique au plugin */
+}
+
+.wrap[id="admin-settings"] {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 300px;
+    margin-top: 20px;
+    font-family: Roboto, open-sans, sans-serif;
+}
+
+.wrap[id="admin-settings"] h2 {
+    text-align: center;
+    padding: 20px;
+    background-color: #666;
+    color: #eee;
+    font-weight: 200;
+}
+
+.wrap[id="admin-settings"] form {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #666;
+}
+
+.wrap[id="admin-settings"] form p label {
+    text-transform: initial;
+}
+
+.wrap[id="admin-settings"] form p label:first-of-type {
+    width: 100%;
+}
+
+.wrap[id="admin-settings"] form select {
+    margin-bottom: 20px;
+}
+
+.wrap[id="admin-settings"] form label:nth-child(n+2) {
+    text-transform: capitalize;
+    color: #666;
+    font-weight: bold;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.wrap[id="admin-settings"] form input[type="text"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    color: #666;
+}
+
+.wrap[id="admin-settings"] form input[type="text"]:last-of-type {
+    margin-bottom: 0;
+}
+
+.wrap[id="admin-settings"] form input[type="submit"] {
+    width: 100%;
+    background-color: #ccc;
+    border: 1px solid #666;
+    padding: 15px;
+    margin-bottom: 0px;
+}
+
+.wrap[id="admin-settings"] form input[type="submit"]:hover {
+    background-color: #eee;
+}
+
+
+/*--------------------------------------------------------------
+# Front-End Tabs
+--------------------------------------------------------------*/
+
+
+/* Variables */
+
+
+/* Mixins */
+
+.hidden-content {
+    display: none;
+}
+
