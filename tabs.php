@@ -63,36 +63,16 @@ function em_plugin_init(){
 			/**
 			 * @todo Gestion du postType autrement que en dur?
 			 */
-
-			/* Récupération des options enregistrées par l'utilisateur dans les options du plugin */
-			$choice 	= get_option('tabs_choice');
-			$source 	= get_option('tabs_source');
-			$caption 	= get_option('tabs_caption');
-			$repeater 	= get_option('tabs_repeater');
-			$_img 		= get_option('tabs_image');
-			$_content 	= get_option('tabs_content');
-			$_link 		= get_option('tabs_link');
-			$_title 	= get_option('tabs_title');
-			$postType 	= 'tabs';
-			
+			$postType = 'tabs';
+		
 			extract(shortcode_atts(array( 'posts' => 1,'id' => '-1'), $atts) );
-
-			/* récupération des infos du module d'onglets en fonction de l'id spécifié dans le shortcode */
-			$billet = get_post($id);
-			if ( $billet ) {
-				$title = $billet->post_title;
-				$contenu = $billet->post_content;
-				$contenu = apply_filters('the_content', $contenu);
-				$contenu = str_replace(']]>', ']]&gt;', $contenu);
-				$choix = get_field( $choice, $id);
-			}
 
 			/* Parcours de tous les Posts de type $postType et récupération des IDs */
 			$args = array( 'post_type' => $postType, 'fields' => 'ids');
 
-			$loop = new WP_Query( $args );
+			$cpt_ids = new WP_Query( $args );
 			$arr = array();
-			while ( $loop->have_posts() ) : $loop->the_post();
+			while ( $cpt_ids->have_posts() ) : $cpt_ids->the_post();
 				$postTypeID = get_the_ID();
 				array_push($arr,$postTypeID);
 			endwhile;
@@ -104,7 +84,7 @@ function em_plugin_init(){
 
 			if ( ! in_array ($id, $arr) ) {
 				// si l'ID spécifié n'existe pas, le module d'onglets n'existe pas
-				$return_string .= $id . ' <p>Le module d\'onglets que vous tentez d\'afficher n\'existe pas</p>';
+				$return_string .= "<p>Le module d'onglets que vous tentez d'afficher n'existe pas. (id = $id)</p>";
 			} else {
 				// sinon, le module d'onglets existe et on structure son affichage
 				

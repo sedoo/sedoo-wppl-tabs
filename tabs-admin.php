@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * @todo validation de formulaire en fonction des données entrées
+ * @todo Rassembler les variables dans des tableaux
  */
 
 /* Vérifie que ACF est installé */
