@@ -1,6 +1,6 @@
 <?php 
 /**
-* Plugin Name: Tabs
+* Plugin Name: sedoo-wppl-tabs
 * Description: Plugin permettant l'ajout d'un module à onglets dans le contenu d'un post ou d'une page via un shortcode
 * Author: Esteban
 * Version: 1.0.0
