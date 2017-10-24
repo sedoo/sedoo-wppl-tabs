@@ -41,7 +41,7 @@ function em_plugin_init(){
 
 			// page qui gère l'affichage des réglages du plugin	dans l'admin
 			// et la sauvegarde des données entrées dans les inputs
-			// include('tabs-admin.php'); 	
+			include('tabs-admin.php'); 	
 		}
 
 		/* Custom fonctions chargées au chargement du menu de l'admin */
@@ -199,20 +199,18 @@ function em_plugin_init(){
 
 			// s'il a les droits
 			if ( get_user_option( 'rich_editing' ) == 'true' ) {
-				add_filter( 'mce_external_plugins', 'em_add_plugin' );
-				add_filter( 'mce_buttons', 'em_register_button' );
+				global $typenow;
+				if (empty($typenow) && !empty($_GET['post'])) {
+					$post = get_post($_GET['post']);
+					$typenow = $post->post_type;
+				}
+				if ("page" == $typenow || "post" == $typenow) {
+					add_filter( 'mce_external_plugins', 'em_add_plugin' );
+					add_filter( 'mce_buttons', 'em_register_button' );
+				}
 			}
 		}
 		add_action('init', 'em_plugin_button');
-
-		/* Gestion des dépendances et des scripts */
-		function em_scripts () {
-			/* Script du plugin */
-			wp_register_script( 'tabs-main', plugin_dir_url( __FILE__ ) . 'js/main.js', array(), '20151215', true );
-			wp_enqueue_script( 'tabs-main');
-		}
-		add_action('wp_enqueue_scripts', 'em_scripts');
-
 
 		/* Personnaliser les couleurs */		
 		function em_customize_register($wp_customize) 
@@ -311,6 +309,16 @@ function em_plugin_init(){
 		<?php
 		}
 		add_action('wp_head', 'em_output_customCSS');
+
+		/**
+		* Enlève l'editor dans l'édition des tabs
+		*/
+		add_action( 'init', function() {
+			remove_post_type_support( 'tabs', 'editor' );
+		}, 99);
+
 	}
 }
 add_action('plugins_loaded', 'em_plugin_init');
+
+

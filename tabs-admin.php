@@ -17,29 +17,39 @@ if ( isset($_POST['tabs_hidden']) && $_POST['tabs_hidden'] == 'Y' ) {
 	/*
 		On enregistre la valeur envoyée dans la variable
 	*/
-	$acf_name 	= $_POST['tabs_acf_name'];
-	$choice 	= $_POST['tabs_choice'];
-	$source 	= $_POST['tabs_source'];
-	$caption 	= $_POST['tabs_caption'];
-	$repeater 	= $_POST['tabs_repeater'];
-	$_img 		= $_POST['tabs_image'];
-	$_content 	= $_POST['tabs_content'];
-	$_link 		= $_POST['tabs_link'];
-	$_title 	= $_POST['tabs_title'];
+	$acf_name 		= $_POST['tabs_acf_name'];
+	$title_tab1 	= $_POST['tabs_title_tab1'];
+	$content_tab1 	= $_POST['tabs_content_tab1'];
+	$title_tab2 	= $_POST['tabs_title_tab2'];
+	$content_tab2 	= $_POST['tabs_content_tab2'];
+	$title_tab3 	= $_POST['tabs_title_tab3'];
+	$content_tab3 	= $_POST['tabs_content_tab3'];
+	$title_tab4 	= $_POST['tabs_title_tab4'];
+	$content_tab4 	= $_POST['tabs_content_tab4'];
+	$title_tab5 	= $_POST['tabs_title_tab5'];
+	$content_tab5 	= $_POST['tabs_content_tab5'];
+	$title_tab6 	= $_POST['tabs_title_tab6'];
+	$content_tab6 	= $_POST['tabs_content_tab6'];
+
 
 	/*
 		On met à jour la table "wp_options" dans la BDD 
 		on crée ou met à jour les champs 'tabs_XXX' avec les valeurs $XXX
 	*/
-	update_option( 'tabs_acf_name', $acf_name ); // ($option_name, $option_value)
-	update_option( 'tabs_choice'	, $choice 	); 
-	update_option( 'tabs_source'	, $source 	);
-	update_option( 'tabs_caption'	, $caption 	);
-	update_option( 'tabs_repeater', $repeater );
-	update_option( 'tabs_image'	, $_img 	);
-	update_option( 'tabs_content'	, $_content );
-	update_option( 'tabs_link'	, $_link 	);
-	update_option( 'tabs_title'	, $_title 	);
+	update_option( 'tabs_acf_name'		, $acf_name ); // ($option_name, $option_value)
+	update_option( 'tabs_title_tab1'	, $title_tab1 	);
+	update_option( 'tabs_content_tab1'	, $content_tab1 );
+	update_option( 'tabs_title_tab2'	, $title_tab2 	);
+	update_option( 'tabs_content_tab2'	, $content_tab2 );
+	update_option( 'tabs_title_tab3'	, $title_tab3 	);
+	update_option( 'tabs_content_tab3'	, $content_tab3 );
+	update_option( 'tabs_title_tab4'	, $title_tab4 	);
+	update_option( 'tabs_content_tab4'	, $content_tab4 );
+	update_option( 'tabs_title_tab5'	, $title_tab5 	);
+	update_option( 'tabs_content_tab5'	, $content_tab5 );
+	update_option( 'tabs_title_tab6'	, $title_tab6 	);
+	update_option( 'tabs_content_tab6'	, $content_tab6 );
+
 
 	// Requête qui retourne tous les posts du Custom Post Type 'tabs'
 	$cpt_tabs = new WP_Query( array( 'post_type'=>'tabs' ) );
@@ -51,27 +61,22 @@ if ( isset($_POST['tabs_hidden']) && $_POST['tabs_hidden'] == 'Y' ) {
 			$cpt_tabs->the_post();
 
 			// enregistrement des valeurs pour validation du formulaire
-			$acf_choix = get_field($choice);
-			$acf_source = get_field($source);
-			$acf_caption = get_field($caption);
-			$acf_repeater = get_field($repeater);
+			$acf_title_tab1 = get_field($title_tab1);
+			$acf_content_tab1 = get_field($content_tab1);
+			$acf_title_tab2 = get_field($title_tab2);
+			$acf_content_tab2 = get_field($content_tab2);
+			$acf_title_tab3 = get_field($title_tab3);
+			$acf_content_tab3 = get_field($content_tab3);	
+			$acf_title_tab4 = get_field($title_tab4);
+			$acf_content_tab4 = get_field($content_tab4);
+			$acf_title_tab5 = get_field($title_tab5);
+			$acf_content_tab5 = get_field($content_tab5);
+			$acf_title_tab6 = get_field($title_tab6);
+			$acf_content_tab6 = get_field($content_tab6);					
 
-			if( have_rows($repeater) ):
-
-			    while( have_rows($repeater) ) : the_row();
-			        
-					$acf_image = get_sub_field($_img);
-					$acf_content = get_sub_field($_content);
-					$acf_link = get_sub_field($_link);
-					$acf_title = get_sub_field($_title);
-
-			    endwhile;
-
-			endif;
 		}
 		wp_reset_postdata();
 	}
-
 
 ?>
 	<!-- Affichage d'une alerte quand les options sont enregistrées -->
@@ -87,15 +92,19 @@ if ( isset($_POST['tabs_hidden']) && $_POST['tabs_hidden'] == 'Y' ) {
 		On récupère les valeurs des champs 'tabs_XXX'  	
 		dans la table 'wp_options' de la BDD 			
 	*/
-	$acf_name 	= get_option( 'tabs_acf_name'	); // ($option_name)
-	$choice 	= get_option( 'tabs_choice'	);
-	$source 	= get_option( 'tabs_source'	);
-	$caption 	= get_option( 'tabs_caption'	);
-	$repeater 	= get_option( 'tabs_repeater'	);
-	$_img 		= get_option( 'tabs_image'	);
-	$_content 	= get_option( 'tabs_content'	);
-	$_link 		= get_option( 'tabs_link'		);
-	$_title 	= get_option( 'tabs_title' 	);
+	$acf_name 		= $_POST['tabs_acf_name'];
+	$title_tab1 	= $_POST['tabs_title_tab1'];
+	$content_tab1 	= $_POST['tabs_content_tab1'];
+	$title_tab2 	= $_POST['tabs_title_tab2'];
+	$content_tab2 	= $_POST['tabs_content_tab2'];
+	$title_tab3 	= $_POST['tabs_title_tab3'];
+	$content_tab3 	= $_POST['tabs_content_tab3'];
+	$title_tab4 	= $_POST['tabs_title_tab4'];
+	$content_tab4 	= $_POST['tabs_content_tab4'];
+	$title_tab5 	= $_POST['tabs_title_tab5'];
+	$content_tab5 	= $_POST['tabs_content_tab5'];
+	$title_tab6 	= $_POST['tabs_title_tab6'];
+	$content_tab6 	= $_POST['tabs_content_tab6'];
 
 	// Requête qui retourne tous les posts du Custom Post Type 'tabs'
 	$cpt_tabs = new WP_Query( array( 'post_type'=>'tabs' ) );
@@ -107,23 +116,18 @@ if ( isset($_POST['tabs_hidden']) && $_POST['tabs_hidden'] == 'Y' ) {
 			$cpt_tabs->the_post();
 
 			// enregistrement des valeurs pour validation du formulaire
-			$acf_choix = get_field($choice);
-			$acf_source = get_field($source);
-			$acf_caption = get_field($caption);
-			$acf_repeater = get_field($repeater);
-
-			if( have_rows($repeater) ):
-
-			    while( have_rows($repeater) ) : the_row();
-			        
-					$acf_image = get_sub_field($_img);
-					$acf_content = get_sub_field($_content);
-					$acf_link = get_sub_field($_link);
-					$acf_title = get_sub_field($_title);
-
-			    endwhile;
-
-			endif;
+			$acf_title_tab1 = get_field($title_tab1);
+			$acf_content_tab1 = get_field($content_tab1);
+			$acf_title_tab2 = get_field($title_tab2);
+			$acf_content_tab2 = get_field($content_tab2);
+			$acf_title_tab3 = get_field($title_tab3);
+			$acf_content_tab3 = get_field($content_tab3);	
+			$acf_title_tab4 = get_field($title_tab4);
+			$acf_content_tab4 = get_field($content_tab4);
+			$acf_title_tab5 = get_field($title_tab5);
+			$acf_content_tab5 = get_field($content_tab5);
+			$acf_title_tab6 = get_field($title_tab6);
+			$acf_content_tab6 = get_field($content_tab6);	
 		}
 		wp_reset_postdata();
 	}
@@ -176,61 +180,67 @@ if ( $cpt_tabs->have_posts() ) {
 		<div class="updated">Veuillez créer un groupe de champs avec ACF.</div>
 <?php 
 	}
-
 ?>
 		<!-- inputs qui permettent de lier les noms des champs au plugin -->
-        <label for="tabs_choice">choice</label>
-        <input type="text" name="tabs_choice" id="tabs_choice" value="<?php echo $choice; ?>" >
-        <span class="notice <?php if ($acf_choix !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php if ($acf_choix == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+        <label for="tabs_title_tab1">Titre onglet n°1</label>
+        <input type="text" name="tabs_title_tab1" id="tabs_title_tab1" value="<?php echo $title_tab1; ?>" >
+        <span class="notice <?php if ($acf_title_tab1 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_title_tab1 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_source">source</label>
-        <input type="text" name="tabs_source"  id="tabs_source" value="<?php echo $source; ?>" >
-        <span class="notice <?php if ($acf_source !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php if ($acf_source == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+		<label for="tabs_content_tab1">Contenu onglet n°1</label>
+        <input type="text" name="tabs_content_tab1" id="tabs_content_tab1" value="<?php echo $content_tab1; ?>" >
+        <span class="notice <?php if ($acf_content_tab1 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_content_tab1 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_caption">caption</label>
-        <input type="text" name="tabs_caption"  id="tabs_caption" value="<?php echo $caption; ?>" >
-        <span class="notice <?php if ($acf_caption !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php if ($acf_caption == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+		<label for="tabs_title_tab2">Titre onglet n°2</label>
+        <input type="text" name="tabs_title_tab2" id="tabs_title_tab2" value="<?php echo $title_tab2; ?>" >
+        <span class="notice <?php if ($acf_title_tab2 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_title_tab2 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_repeater">repeater</label>
-        <input type="text" name="tabs_repeater"  id="tabs_repeater" value="<?php echo $repeater; ?>" >
-        <span class="notice <?php if ($acf_repeater !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php if ($acf_repeater == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+		<label for="tabs_content_tab2">Contenu onglet n°2</label>
+        <input type="text" name="tabs_content_tab2" id="tabs_content_tab2" value="<?php echo $content_tab2; ?>" >
+        <span class="notice <?php if ($acf_content_tab2 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_content_tab2 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_image">image</label>
-        <input type="text" name="tabs_image"  id="tabs_image" value="<?php echo $_img; ?>" >
-        <span class="notice <?php if ( isset($acf_image) && is_array($acf_image) ) echo 'input-success'; else echo 'notice-error'; ?> ">
-	        <?php 
-		        if ( ! isset($acf_image) ) echo 'Le nom du repeater n\'est pas valide'; 
-		        else if ( ! is_array($acf_image) ) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; 
-	        ?>	
+		<label for="tabs_title_tab3">Titre onglet n°3</label>
+        <input type="text" name="tabs_title_tab3" id="tabs_title_tab3" value="<?php echo $title_tab3; ?>" >
+        <span class="notice <?php if ($acf_title_tab3 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_title_tab3 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_content">content</label>
-        <input type="text" name="tabs_content"  id="tabs_content" value="<?php echo $_content; ?>" >
-        <span class="notice <?php if ( isset($acf_content) && $acf_content !== false ) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php 
-        		if ( ! isset($acf_content) ) echo 'Le nom du repeater n\'est pas valide';
-        		else if ( $acf_content === false ) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; 
-        	?>
+		<label for="tabs_content_tab3">Contenu onglet n°3</label>
+        <input type="text" name="tabs_content_tab3" id="tabs_content_tab3" value="<?php echo $content_tab3; ?>" >
+        <span class="notice <?php if ($acf_content_tab3 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_content_tab3 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_link">link</label>
-        <input type="text" name="tabs_link"  id="tabs_link" value="<?php echo $_link; ?>" >
-        <span class="notice <?php if ( isset($acf_link) && $acf_link !== false ) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php 
-        		if ( ! isset($acf_link) ) echo 'Le nom du repeater n\'est pas valide';
-        		else if ( $acf_link === false ) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; 
-        	?>
+		<label for="tabs_title_tab4">Titre onglet n°4</label>
+        <input type="text" name="tabs_title_tab4" id="tabs_title_tab4" value="<?php echo $title_tab4; ?>" >
+        <span class="notice <?php if ($acf_title_tab4 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_title_tab4 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
-        <label for="tabs_title">title</label>
-        <input type="text" name="tabs_title"  id="tabs_title" value="<?php echo $_title; ?>" >
-        <span class="notice <?php if ( isset($acf_title) && $acf_title !== false ) echo 'input-success'; else echo 'notice-error'; ?> ">
-        	<?php 
-        		
-        		if ( ! isset($acf_title) ) echo 'Le nom du repeater n\'est pas valide';
-        		else if ( $acf_title === false) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; 
-        	?>
+		<label for="tabs_content_tab4">Contenu onglet n°4</label>
+        <input type="text" name="tabs_content_tab4" id="tabs_content_tab4" value="<?php echo $content_tab4; ?>" >
+        <span class="notice <?php if ($acf_content_tab4 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_content_tab4 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+        </span>
+		<label for="tabs_title_tab5">Titre onglet n°5</label>
+        <input type="text" name="tabs_title_tab5" id="tabs_title_tab5" value="<?php echo $title_tab5; ?>" >
+        <span class="notice <?php if ($acf_title_tab5 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_title_tab5 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+        </span>
+		<label for="tabs_content_tab5">Contenu onglet n°5</label>
+        <input type="text" name="tabs_content_tab5" id="tabs_content_tab5" value="<?php echo $content_tab5; ?>" >
+        <span class="notice <?php if ($acf_content_tab5 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_content_tab5 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+        </span>
+		<label for="tabs_title_tab6">Titre onglet n°6</label>
+        <input type="text" name="tabs_title_tab6" id="tabs_title_tab6" value="<?php echo $title_tab6; ?>" >
+        <span class="notice <?php if ($acf_title_tab6 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_title_tab6 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
+        </span>
+		<label for="tabs_content_tab6">Contenu onglet n°6</label>
+        <input type="text" name="tabs_content_tab6" id="tabs_content_tab6" value="<?php echo $content_tab6; ?>" >
+        <span class="notice <?php if ($acf_content_tab6 !== NULL) echo 'input-success'; else echo 'notice-error'; ?> ">
+        	<?php if ($acf_content_tab6 == NULL) echo 'Ce nom de champ n\'existe pas dans le groupe ' . $acf_name . '.'; ?>        	
         </span>
 
 		<script>
@@ -267,27 +277,23 @@ if ( $cpt_tabs->have_posts() ) {
 		register_post_type( 
 			'tabs', 							
 			array(
-				'label' => 'Tabs', 			
+				'label' => 'Modules d\'onglets', 			
 				'labels' => array(    			
-					'name' => 'Tabs',
-					'singular-name' => 'Tab',
-					'all_items' => 'Tous les Tabs',
-					'add_new_item' => 'Ajouter un tabs',
-					'edit_item' => 'Editer le tabs',
-					'new_item' => 'Nouveau tabs',
-					'view_item' => 'Voir le tabs',
-					'search_item' => 'Rechercher parmis les tabs',
-					'not_found' => 'Pas de tabs trouvé',
-					'not_found_in_trash' => 'Pas de tabs dans la corbeille'
+					'name' => 'Modules d\'onglets',
+					'singular-name' => 'Module d\'onglets',
+					'all_items' => 'Tous les modules d\'onglets',
+					'add_new_item' => 'Ajouter un module d\'onglets',
+					'edit_item' => 'Editer le module d\'onglets',
+					'new_item' => 'Nouveau module d\'onglets',
+					'view_item' => 'Voir le module d\'onglets',
+					'search_item' => 'Rechercher parmis les modules d\'onglets',
+					'not_found' => 'Pas de module d\'onglets trouvé',
+					'not_found_in_trash' => 'Pas de module d\'onglets dans la corbeille'
 				),
 				'public' => true, 				
 				'show_in_rest' => true,         
 				'capability_type' => 'post',	
-				'supports' => array(			
-					'title',
-					'thumbnail',
-					'editor'	
-				),
+				'supports' => array(),
 				'has_archive' => true, 
 				// Url vers une icone ou à choisir parmi celles de WP : https://developer.wordpress.org/resource/dashicons/.
 				'menu_icon'   => 'dashicons-index-card'
