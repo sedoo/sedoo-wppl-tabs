@@ -107,60 +107,51 @@ function em_plugin_init(){
 				$return_string .= $id . ' <p>Le module d\'onglets que vous tentez d\'afficher n\'existe pas</p>';
 			} else {
 				// sinon, le module d'onglets existe et on structure son affichage
-				$return_string .= '<h2>'.$title.'</h2>';
-
-				// parcours du repeater qui contient les diapositives 
-				// pour afficher les liens qui les contrôlent
-				if ( have_rows($repeater, $id) ) :
-					while (have_rows($repeater, $id) ) : the_row();
-						$image = get_sub_field($_img);
-						$titre = get_sub_field($_title);
-						$link = get_sub_field($_link);
-						$return_string .= '<a href="#" data-img="'.$image['title'].'">'.$titre.'</a>';
-					endwhile;
-					wp_reset_postdata();
-				else :
-					$return_string .= 'pas de champ Repeater ';
-				endif;
-
-				$return_string .= '</nav><div class="slides">';
 				
-				// si le Slider est de type "survol", on a besoin d'une image source (d'arrière plan)	
-				// if ($choix == "survol") :
-				// 	$source = get_field($source, $id);
-				// 	$legende = get_field($caption, $id);
-				// 	$return_string .= '<figure data-img="tabs-survol-source" id="source"><img src="'.$source['url'].'" alt="tabs-survol-source" >';
-				// 	$return_string .= '<figcaption>'.$legende.'</figcaption></figure>';
-				// endif;
-				// parcours du repeater qui contient les diapositives 
-				// pour afficher les images avec leur légende et leurs attributs, 
-				// ainsi que les liens vers lesquels chacune d'elles pointe.
-				if ( have_rows($repeater, $id) ) :
-					while (have_rows($repeater, $id) ) : the_row();
-						$image = get_sub_field($_img);
-						$content = get_sub_field($_content);
-						$link = get_sub_field($_link);
-						$return_string .= '<figure class="slide hidden-content" data-img="'.$image['title'].'">';					
-						$return_string .= '<img src="'.$image['url'].'" alt="'.$image['alt'].'" /><figcaption>';
+				// Contrôler si ACF est actif
+				if ( !function_exists('get_field') ) return;
 
-						if( $link ):
-							$return_string .= '<a href="'.$link.'">';
-						endif;
-				  
-				  		$return_string .= $content;
+				$return_string .= '<section class="worko-tabs">';
 
-						if( $link ):
-							$return_string .= '</a>';
-						endif;
-						$return_string .= '</figcaption></figure>';
+				$title_tabs = [];
+				$content_tabs = [];
+				for($i=1; $i<7; $i++){ 
+					$title_tabs[$i] = get_field('title-tab'.$i.'-custom_tabs', $id);
+					$content_tabs[$i] = get_field('content-tab'.$i.'-custom_tabs', $id);
+				}
 
-					endwhile;
-					wp_reset_postdata();
-				endif;
-				$return_string .= '</div></section><article>'.$contenu.'</article>';
-			
-			}	
-				
+				// insérer les input radio
+				for($i=1; $i<7; $i++){ 
+					if($content_tabs[$i] !== "" && $title_tabs[$i] !== "") {
+						$return_string .= '<input class="state" type="radio" name="tabs-state"'; 
+						if($i == 1){
+							$return_string .= 'checked="checked" ';
+						}
+						$return_string .= 'id="tab-'.$i.'"/>';
+					}
+				}
+				$return_string .= '<div class="tabs flex-tabs">';
+
+				// Afficher les titres des onglets dans des <label>
+				for($i=1; $i<7; $i++){
+					if($content_tabs[$i] !== "" && $title_tabs[$i] !== "") {
+						$return_string .= '<label class="tab" id="tab-'.$i.'-label" for="tab-'.$i.'" >'.$title_tabs[$i].'</label>';
+					}
+				} 
+
+				// Afficher le contenu des onglets
+				for($i=1; $i<7; $i++){ 
+					if($content_tabs[$i] !== "" && $title_tabs[$i] !== "") {
+						$return_string .= '<div id="tab-'.$i.'-panel" class="panel';
+						if($i == 1){ 
+							$return_string .= ' active';
+						} 
+						$return_string .= '">' . $content_tabs[$i] .'</div>';
+					}
+				}			
+				$return_string .= '</div></section>';	
+
+			}					
 			return $return_string; //retour de la chaîne de caractère concaténée
 		}
 
@@ -212,99 +203,35 @@ function em_plugin_init(){
 		}
 		add_action('init', 'em_plugin_button');
 
-		/* Personnaliser les couleurs */		
-		function em_customize_register($wp_customize) 
-		{
-			$wp_customize->add_section("tabs_color_settings_section", array(
-				"title" => __("Custom Slider Button Plugin Colors", "customizer_color_sections"),
-				"priority" => 30,
-			));
+		function em_output_customCSS() { 
+			
+			if (get_theme_mod('theme_aeris_main_color') == "custom" ) {
+				$code_color = get_theme_mod( 'theme_aeris_color_code' );
+			}
+			else {
+				$code_color	= get_theme_mod( 'theme_aeris_main_color' );
+			}
 
-			/* Main Theme Color */
-			$wp_customize->add_setting("main_theme_color", array(
-				"default" => "#2f4f4f",
-				"transport" => "refresh",
-				"type" => "option"
-			));
-
-			$wp_customize->add_control(new WP_Customize_Color_Control(
-				$wp_customize,
-				"main_theme_color_control",
-				array(
-					"label" => __("Main Theme Color", ""),
-					"section" => "tabs_color_settings_section",
-					"settings" => "main_theme_color",
-				)
-			));
-			/* Secondary Theme Color */
-			$wp_customize->add_setting("secondary_theme_color", array(
-				"default" => "#eeeeee",
-				"transport" => "refresh",
-				"type" => "option"
-			));
-
-			$wp_customize->add_control(new WP_Customize_Color_Control(
-				$wp_customize,
-				"secondary_theme_color_control",
-				array(
-					"label" => __("Secondary Theme Color", ""),
-					"section" => "tabs_color_settings_section",
-					"settings" => "secondary_theme_color",
-				)
-			));
-
-			/* Slider Background */
-			$wp_customize->add_setting("slider_bg_color", array(
-				"default" => "#222222",
-				"transport" => "refresh",
-				"type" => "option"
-			));
-
-			$wp_customize->add_control(new WP_Customize_Color_Control(
-				$wp_customize,
-				"slider_bg_color_control",
-				array(
-					"label" => __("Slider Background Color and Nav Links Hover", ""),
-					"section" => "tabs_color_settings_section",
-					"settings" => "slider_bg_color",
-				)
-			));
-		}
-		add_action("customize_register","em_customize_register");
-
-		function em_output_customCSS() { ?>
+			// Récupération de la couleur principale du thème
+			?>
 			<style type="text/css">
-
-				/* Main Color */
-				section.slider nav a.active,
-				section.survol nav a.active {
-					color:<?php echo get_option("main_theme_color");?>;
-					border-top-color: <?php echo get_option("main_theme_color");?>;
+			
+				[for^="tab-"] {
+					border-bottom:3px solid  <?php echo $code_color;?>;
+					color:<?php echo $code_color;?>;
 				}
 
-				/* Secondary Color*/
-				section.survol+article ul {
-					background-color: <?php echo get_option("secondary_theme_color");?>;
-				}
-				section.survol,
-				section.slider {
-					border-color: <?php echo get_option("secondary_theme_color");?>;
-				}
-				[data-img="source"] figcaption {
-					color: <?php echo get_option("secondary_theme_color");?>;
+				#tab-1:checked ~ .tabs #tab-1-label,
+				#tab-2:checked ~ .tabs #tab-2-label,
+				#tab-3:checked ~ .tabs #tab-3-label,
+				#tab-4:checked ~ .tabs #tab-4-label,
+				#tab-5:checked ~ .tabs #tab-5-label,
+				#tab-6:checked ~ .tabs #tab-6-label  {
+					background-color: <?php echo $code_color;?>;
+					color:#fff;
+					cursor: default;
 				}
 
-				/* Background Color & Hover Nav Links */
-				section.survol .slides,
-				section.slider .slides {
-					background-color: <?php echo get_option("slider_bg_color");?>;
-				}
-				section.slider nav a:hover,
-				section.survol nav a:hover {
-					color: <?php echo get_option("slider_bg_color");?>;
-					border-top-color: <?php echo get_option("slider_bg_color");?>;
-				}
-				
 			</style>
 		<?php
 		}
