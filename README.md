@@ -42,7 +42,7 @@ Cliquer sur `Publier`
 
 ### Importer
 
-Importer directement le fichier `.json` décrivant le groupe de champs.
+Importer directement le fichier `acf-export-2017-10-24.json` décrivant le groupe de champs.
 
 Dans `ACF > Outils`, sélectionner le fichier à importer avec le bouton `Parcourir...`
 
