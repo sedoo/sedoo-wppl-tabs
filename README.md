@@ -52,6 +52,9 @@ Cliquer sur `Importer`
 
 1. Aller dans `Tabs Settings`
 2. Vérifier que le `select` contient "Tableau à onglets"
+
+**NB :** Il se peut qu'il faille d'abord créer un module d'onglets pour que cela fonctionne (cf. **Créer un module d'onglets**, ci-dessous)
+
 3. Remplir les inputs avec les noms des champs ACF (ceux en minuscule)
 
 Ex : 
